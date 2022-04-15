@@ -13,7 +13,7 @@
     //console.log(result3);
 
     //console.log('UPDATE USUARIO');
-    //const result2 = await db.updateUsuario(9, {nome:"Zé José", senha: "hhjdhjjhsd7368"});
+    //const result2 = await db.updateUsuario(3, {nome:"Zé José", senha: "hhjdhjjhsd7368"});
     //console.log(result2);
     
 })();
