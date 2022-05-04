@@ -1,40 +1,40 @@
-async function connect(){
-    if(global.connection && global.connection.state !== 'disconnected')
-    return global.connection;
-
-    const mysql = require("mysql2/promise");
-    const connection = await mysql.createConnection("mysql://root:24017878@localhost:3306/webii");
-    console.log("Conectou no MySQL!");
-    global.connection = connection;
-    return connection;
-}
-
+const usuarioBD =require('./db.js');
 
 async function selectUsuario(){
-    const conn = await connect();
+    const conn = await usuarioBD.connect();
     const [rows] = await conn.query('SELECT * FROM usuario;');
     return rows;
 }
 
 async function insertUsuario(usuario){
-    const conn = await connect();
+    const conn = await usuarioBD.connect();
     const sql = 'INSERT INTO usuario(nome, senha) VALUES (?,?);';
     const values = [usuario.nome, usuario.senha];
     return await conn.query(sql, values);
 }
 
 async function deleteUsuario(id){
-    const conn = await connect();
+    const conn = await usuarioBD.connect();
     const sql = 'DELETE FROM usuario where id=?;';
     return await conn.query(sql, [id]);
 }
 
 async function updateUsuario(id, usuario){
-    const conn = await connect();
+    const conn = await usuarioBD.connect();
     const sql = 'UPDATE usuario SET nome=?, senha=? WHERE id=?;';
     const values = [usuario.nome, usuario.senha, id];
     return await conn.query(sql, values);
 }
 
 
-module.exports = {selectUsuario, insertUsuario, deleteUsuario, updateUsuario}
+async function getUsuarioId(id){
+    const conn = await usuarioBD.connect();
+    const sql = 'SELECT * FROM usuario WHERE id =?';
+    const values = [id];
+    const rows = await conn.query(sql, values);
+    if(rows.length > 0)
+    return rows[0];
+    else return null;
+}
+
+module.exports = {selectUsuario, insertUsuario, deleteUsuario, updateUsuario, getUsuarioId}
