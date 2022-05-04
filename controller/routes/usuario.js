@@ -8,7 +8,7 @@ app.get("/cadastro", function(req, res){
     if(req.query.fail)
         res.render('usuario/Cadastro', { mensagem: 'Cadastro' });
     else
-        res.render('usuario/Cadastro'), { mensagem: null });
+        res.render('usuario/Cadastro', { mensagem: null });
 }) 
 
 app.post('/cadastro/usuario/edit/salvar', (req, res) => {
@@ -22,5 +22,5 @@ app.post('/cadastro/usuario/edit/salvar', (req, res) => {
     } catch (error) {
         res.render('usuario/EditUsuario', { title: 'Edição Cadastro', mensagem: 'Erro no cadastro' });
     }
-}
 });
+}
