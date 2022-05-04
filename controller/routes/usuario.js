@@ -1,14 +1,14 @@
 const { application } = require('express');
 const seguranca = require('../../model/components/seguranca');
-const usuarioBanco = require('../../model/components/usuarioBD');
+const usuarioBanco = require('../../model/repositories/usuarioBD');
 
 module.exports = function(app){
 
 app.get("/cadastro", function(req, res){
     if(req.query.fail)
-        res.render('usuario/Cadastro', { mensagem: 'Cadastro' });
+        res.render('../../view/usuario/CadastroUsuario', { mensagem: 'Cadastro' });
     else
-        res.render('usuario/Cadastro', { mensagem: null });
+        res.render('../../view/usuario/CadastroUsuario', { mensagem: null });
 }) 
 
 app.post('/cadastro/usuario/edit/salvar', (req, res) => {
