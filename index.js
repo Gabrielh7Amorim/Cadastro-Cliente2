@@ -1,55 +1,38 @@
-/*(async()=>{
-    const db = require("./model/repositories/usuarioBD");
+const express = require("express");
+const app = express();
+
+
+app.engine('html', require('ejs').renderFile);
+ //npm install ejs
+app.set('view engine', 'ejs')
+var path = require('path');
+app.set('views', path.join(__dirname, '/view/ '));
+// npm install body-parser
+    //utilitario que serve para receber dados de qualquer formulario dentro do express
+    bodyParser = require('body-parser');
+    app.use(bodyParser.urlencoded({ extended: true}));
+    app.use(bodyParser.json());
+
+    //npm i passport express-session
+    const passport = require('passport');
+    const session = require('express-session');
+    require('./model/components/seguranca')(passclsport);
+        //config
+        app.use(session({
+            secret: '12345678', //configure um segredo seu aqui,
+            resave: false, // salvar a cada requisição
+            saveUninitialized: false, // sessões anônimas
+            cookie: {maxAge: 30 * 60 * 1000} // 30min
+        }))
+// npm install consign
+    var consign = require('consign');
+    consign().include('controller/routes', ).into(app);
+    app.listen(8081, function(){
+    console.info("Servidor funcionando!");
+    })  
+
+    app.post('/login/executar', passport.authenticate('local', {
+        successRedirect: '/lista/usuario',
+        failureRedirect: '/lista/?fail=true'
+    }));
     
-    console.log('SELECT * FROM USUARIO');
-    const usuarios = await db.selectUsuario();
-    console.log(usuarios);
-
-    //console.log('INSERT INTO USUARIO');
-    //const result = await db.insertUsuario({nome: "Zé", senha: "uihdssauihus783"});
-    //console.log(result);
-
-    //console.log('DELETE FROM USUARIO');
-    //const result3 = await db.deleteUsuario(8);
-   // console.log(result3);
-
-   // console.log('UPDATE USUARIO');
-    //const result2 = await db.updateUsuario(3, {nome:"Zé José", senha: "hhjdhjjhsd7368"});
-   // console.log(result2);
-    
-})();*/
-
-(async () =>{
-    const database = require('./dborm');
-    const Cliente = require('./cliente');
-    await database.sequelize.sync();
-
-    //console.log(' Criar tabela ====================================================');
-    //const resultado = await database.sequelize.sync();
-    //console.log(resultado);
-
-    console.log(' Criar um registro ==============================================');
-    const inserirCliente = await Cliente.Cliente.create({
-        nome: 'João da Sila',
-        idade: 10,
-        endereco: 'Rua Paulista, n 10000'
-    })
-    console.log(inserirCliente);
-
-
-    console.log(' buscar um registro ==============================================');
-    const cliente = await Cliente.Cliente.findByPk(1);
-    console.log(cliente);
-
-
-    console.log(' alterar um registro ==============================================');
-    const clienteAlterar = await Cliente.Cliente.findByPk(1);
-    clienteAlterar.nome = "Gabriel Henrique"
-    const resultadoSave = await clienteAlterar.save();
-    console.log(resultadoSave);
-
-
-    //console.log(' Deletar o registro ==============================================');
-    //const clienteDelete = await Cliente.Cliente.findByPk(1);
-    //clienteDelete.destroy();
-})();
