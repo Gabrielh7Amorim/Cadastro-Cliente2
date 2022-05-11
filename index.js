@@ -16,7 +16,7 @@ app.set('views', path.join(__dirname, '/view/ '));
     //npm i passport express-session
     const passport = require('passport');
     const session = require('express-session');
-    require('./model/components/seguranca')(passclsport);
+    require('./model/components/autenticacao')(passport);
         //config
         app.use(session({
             secret: '12345678', //configure um segredo seu aqui,

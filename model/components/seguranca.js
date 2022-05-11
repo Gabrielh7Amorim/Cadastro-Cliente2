@@ -7,7 +7,7 @@ function ocultarSenha(senha) {
     return hash;
 }
 
-function autenticar(rq, res, next) {
+function autenticar(req, res, next) {
     if(require.isAuthenticated()) return next();
     res.redirect('/login?fail=true');
 }

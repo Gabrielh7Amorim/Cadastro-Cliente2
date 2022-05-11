@@ -7,7 +7,7 @@ module.exports = function(passport){
         done(null, user.id);
     });
 
-    passport.deserializaeUser(async (id, done) => {
+    passport.deserializeUser(async (id, done) => {
         try {
             const usuario = await usuarioBanco.getUsuarioId(id);
             done(null, usuario);
