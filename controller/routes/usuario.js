@@ -1,4 +1,3 @@
-const { application } = require('express');
 const seguranca = require('../../model/components/seguranca');
 const usuarioBanco = require('../../model/repositories/usuarioBD');
 
@@ -6,9 +5,9 @@ module.exports = function(app){
 
 app.get("/cadastro", function(req, res){
     if(req.query.fail)
-        res.render('../../view/usuario/CadastroUsuario', { mensagem: 'Cadastro' });
+        res.render('usuario/CadastroUsuario', { mensagem: 'Cadastro' });
     else
-        res.render('../../view/usuario/CadastroUsuario', { mensagem: null });
+        res.render('usuario/CadastroUsuario', { mensagem: '' });
 })
 
 // teste pessoal - cadastrar
@@ -24,7 +23,6 @@ app.get("/cadastro", function(req, res){
 // });
 // })
 
-
 app.post('/cadastro/usuario/edit/salvar', (req, res) => {
     var usuario = { 
         nome: req.body.nome,
@@ -38,24 +36,24 @@ app.post('/cadastro/usuario/edit/salvar', (req, res) => {
     }
 });
 
-app.post('/cadastro/usuario/salvar', seguranca.autenticar, (req,res) =>{
+app.post('/cadastro/usuario/salvar', seguranca.autenticar, (req,res) => {
     try {
        var usuario ={ nome: req.body.nome,
-            senha: seguranca.ocultarSenha(req.body.senha)}
+                    senha: seguranca.ocultarSenha(req.body.senha)}
         usuarioBanco.insertUsuario(usuario); 
         res.render('usuario/Sucesso', {mensagem: 'cadastrado'});
     } catch (error) {
-        console.log(erro);
+        console.log(error);
         res.render('usuario/CadastroUsuario', { title: 'Cadastro',
             mensagem: 'Erro no cadastro'});
     }
 });
 
-app.get('/lista/usuario', seguranca.autenticar, async(req, res, next)=>{
+app.get('/lista/usuario', seguranca.autenticar, async(req, res, next) => {
     try {
         const docs = await usuarioBanco.selectUsuario();
         res.render('usuario/Lista', { mensagem: 'Lista de Usuários', docs});
-    } catch (err) {
+    } catch (err){
         next(err);
     }
 });

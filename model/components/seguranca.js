@@ -4,11 +4,11 @@ function ocultarSenha(senha) {
     console.log(senha);
     var hash = sha1(senha);
     console.log(hash);
-    return hash;
+    return(hash);
 }
 
-function autenticar(req, res, next) {
-    if(require.isAuthenticated()) return next();
+function autenticar(req, res, next){
+    if(req.isAuthenticated()) return next();
     res.redirect('/login?fail=true');
 }
 module.exports = {ocultarSenha, autenticar};

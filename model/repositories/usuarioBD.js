@@ -1,4 +1,5 @@
 const usuarioBD =require('./db.js');
+const seguranca =require('../components/seguranca');
 
 async function selectUsuario(){
     const conn = await usuarioBD.connect();
@@ -19,10 +20,10 @@ async function deleteUsuario(id){
     return await conn.query(sql, [id]);
 }
 
-async function updateUsuario(id, usuario){
+async function updateUsuario(usuario){
     const conn = await usuarioBD.connect();
     const sql = 'UPDATE usuario SET nome=?, senha=? WHERE id=?;';
-    const values = [usuario.nome, usuario.senha, id];
+    const values = [usuario.nome, usuario.senha, usuario.id];
     return await conn.query(sql, values);
 }
 
