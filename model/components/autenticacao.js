@@ -1,6 +1,6 @@
 const LocalStrategy = require('passport-local').Strategy;
-const seguranca = require("./seguranca");
-const usuarioBanco = require("../repositories/usuarioBD");
+const usuarioBanco = require("../repositories/userBD");
+const loginBd = require("../repositories/login");
 
 module.exports = function(passport){
     passport.serializeUser((user, done) => {
@@ -9,7 +9,7 @@ module.exports = function(passport){
 
     passport.deserializeUser(async (id, done) =>{
         try {
-            const usuario = await usuarioBanco.getUsuarioId(id);
+            const usuario = await usuarioBanco.Usuariodb.findByPk(id);
             done(null, usuario);
         } catch (err) {
             done(err, null);
@@ -23,10 +23,11 @@ module.exports = function(passport){
 
         async (nome, senha, done) => {
             try {
-                const usuario = await usuarioBanco.login(nome, senha);
+                const usuario = await loginBd.login(nome, senha);
                 if(usuario != null && usuario[0]){
                     return done(null, usuario[0]);
                 } else {
+                    
                     return done (null, false);
                 }
             } catch (err) {
@@ -34,7 +35,9 @@ module.exports = function(passport){
             }
         }
     ));
+    
 };
+
 
 
 

@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const database = require('./dborm');
 
 
-const Cliente = database.sequelize.define('cliente', {
+const Usuariodb = database.sequelize.define('usuarios', {
     id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -13,10 +13,11 @@ const Cliente = database.sequelize.define('cliente', {
         type: Sequelize.STRING,
         allowNull: false
     },
-    idade: {
-        type: Sequelize.INTEGER
-    },
-    endereco: Sequelize.STRING
+    senha: {
+        type: Sequelize.STRING,
+        allowNull: false
+    }
 })
 
-module.exports = {Cliente}
+module.exports = {Usuariodb};
+// Usuariodb.sync({force: true});
